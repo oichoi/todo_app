@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= link_to 'todoリスト', todos_path %></h1>
+<h1><%= link_to '検索', todos_search_path %></h1>
+<%#ホームで入力%>
+<%= render 'form', todo: @todo %>　
+
+<table>
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th>Limit</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @todos.each do |todo| %>
+      <tr>
+        <td><%= todo.content %></td>
+        <td><%= todo.limit %></td>
+        <td><%= todo.created_at %></td><%#作成日時%>
+        <td><%= button_to 'unDone', done_path(todo), method: :post %></td><%#完了ボタン%>
+        <td><%= link_to 'Show', todo %></td>
+        <td><%= link_to 'Edit', edit_todo_path(todo) %></td>
+        <td><%= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+

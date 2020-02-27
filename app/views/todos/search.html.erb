@@ -1,0 +1,31 @@
+<h1>検索画面</h1>
+
+<%= form_tag todos_search_path, :method => 'get' do %> <%#　projects_pathはモデル名で読みかえること %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil  %>
+  </p>
+<% end %>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th>Limit</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @todos.each do |todo| %>
+      <tr>
+        <td><%= todo.content %></td>
+        <td><%= todo.limit %></td>
+        <td><%= todo.created_at %></td><%#作成日時%>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Back', todos_path %>
