@@ -68,7 +68,7 @@ class TodosController < ApplicationController
   
   def search#検索
   @todos = Todo.all.order(created_at: :desc)#新しい順
-  return @todos.where(['content LIKE ?', "%#{params[:search]} %"])
+  @todos2=@todos.where(['content LIKE ?', "%#{params[:search]}%"])
   end
 
   private

@@ -20,6 +20,7 @@
         <td><%= todo.content %></td>
         <td><%= todo.limit %></td>
         <td><%= todo.created_at %></td><%#作成日時%>
+        <td><%= todo.status %></td>
         <td><%= button_to 'unDone', done_path(todo), method: :post %></td><%#完了ボタン%>
         <td><%= link_to 'Show', todo %></td>
         <td><%= link_to 'Edit', edit_todo_path(todo) %></td>
