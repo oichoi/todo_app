@@ -1,5 +1,5 @@
 class TodosController < ApplicationController
-  before_action :set_todo, only: [:show, :edit, :update, :destroy]
+  before_action :set_todo, only: [:show, :edit, :update, :destroy,:done]
 
   # GET /todos
   # GET /todos.json
@@ -32,7 +32,8 @@ class TodosController < ApplicationController
         format.html { redirect_to todos_url(@todo), notice: 'Todo was successfully created.' }
         format.json { render :show, status: :ok, location: @todo }
       else
-        format.html { render :new }
+        @todos = Todo.all.order(created_at: :desc)#新しい順
+        format.html { render action: :index}
         format.json { render json: @todo.errors, status: :unprocessable_entity }
       end
     end
@@ -43,7 +44,7 @@ class TodosController < ApplicationController
   def update
     respond_to do |format|
       if @todo.update(todo_params)
-        format.html { redirect_to @todo, notice: 'Todo was successfully updated.' }
+        format.html { redirect_to todos_url(@todo), notice: 'Todo was successfully updated.' }
         format.json { render :show, status: :ok, location: @todo }
       else
         format.html { render :edit }
@@ -63,12 +64,19 @@ class TodosController < ApplicationController
   end
   
   def done#完了ボタン
-    @todo.status =="Done"
+  if @todo.status=='undone'
+    @todo.update(status:'done')
+  else
+    @todo.update(status:'undone')
+  end
+    redirect_to todos_url(@todo)
   end
   
   def search#検索
   @todos = Todo.all.order(created_at: :desc)#新しい順
-  @todos2=@todos.where(['content LIKE ?', "%#{params[:search]}%"])
+  if params[:search]
+  @todos2=@todos.where(['content LIKE ?', "%#{params[:search]}%"]).where(status: 'done')
+  end
   end
 
   private

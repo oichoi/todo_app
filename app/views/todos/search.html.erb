@@ -1,31 +1,39 @@
-<h1>検索画面</h1>
 
+<% y=0 %>
 <%= form_tag todos_search_path, :method => 'get' do %> <%#　projects_pathはモデル名で読みかえること %>
   <p>
     <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag "Search", :name => nil  %>
+    <%= submit_tag "検索", :name => nil  %>
   </p>
 <% end %>
-
-
+<% if @todos2 %>
+<% @todos2.each.with_index(1) do |todo,i| %>
+<% y=i %>
+<% end %>
+<% if y!=0 %>
+<%= "ToDoが#{y}件見つかりました" %>
 <table>
-  <thead>
-    <tr>
-      <th>Content</th>
-      <th>Limit</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
   <tbody>
-    <% @todos2.each do |todo| %>
+     <% @todos2.each.with_index(1) do |todo,i| %>
       <tr>
         <td><%= todo.content %></td>
-        <td><%= todo.limit %></td>
-        <td><%= todo.created_at %></td><%#作成日時%>
+        <td>期限:<%=todo.limit %></td>
+        <td>作成日:<%=todo.created_at.strftime('%Y/%m/%d') %></td><%#作成日時%>
+        <% if todo.status=="undone" %>
+        <td><%= button_to "未完了", done_path(todo), method: :post %></td><%#完了ボタン%>
+        <% else %>
+        <td><%= button_to "完了", done_path(todo), method: :post %></td><%#完了ボタン%>
+        <% end %>
+        <td><%#= link_to 'Show', todo %></td>
+        <td><%= link_to '編集', edit_todo_path(todo) %></td>
+        <td><%#= link_to 'Destroy', todo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<% else %>
+<%= "対象のToDoは見つかりません" %>
+<% end %>
+<% end %>
 
-<%= link_to 'Back', todos_path %>
+<%#= link_to 'Back', todos_path %>

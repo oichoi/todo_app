@@ -9,6 +9,12 @@
   </head>
 
   <body>
+    <header>
+    <hgroup>
+      <h1><%= link_to 'todoリスト', todos_path %></h1>
+      <h1><%= link_to '検索', todos_search_path %></h1>
+    </hgroup>
+    </header>
     <%= yield %>
   </body>
 </html>

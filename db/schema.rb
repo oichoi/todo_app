@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20200226100616) do
     t.date "limit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status",default:'undone'
+    t.string "status", default: "undone"
   end
 
 end
